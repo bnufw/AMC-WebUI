@@ -1,5 +1,5 @@
 import {
-  ThinkingLevel,
+  ThinkingLevel as GenAIThinkingLevel,
   type CountTokensConfig,
   type FunctionDeclaration,
   type GenerateContentConfig,
@@ -12,6 +12,7 @@ import {
   type ImageOutputMode,
   type ImagePersonGeneration,
   type SafetySetting,
+  type ThinkingLevel,
 } from '@/types/settings';
 import { logService } from '@/services/logService';
 import {
@@ -27,10 +28,10 @@ import { isServerCodeExecutionMode } from '@/utils/codeExecution';
 const IMAGE_TEXT_MODALITIES = ['IMAGE', 'TEXT'];
 const IMAGE_ONLY_MODALITIES = ['IMAGE'];
 const THINKING_LEVEL_FOR_SDK = {
-  MINIMAL: ThinkingLevel.MINIMAL,
-  LOW: ThinkingLevel.LOW,
-  MEDIUM: ThinkingLevel.MEDIUM,
-  HIGH: ThinkingLevel.HIGH,
+  MINIMAL: GenAIThinkingLevel.MINIMAL,
+  LOW: GenAIThinkingLevel.LOW,
+  MEDIUM: GenAIThinkingLevel.MEDIUM,
+  HIGH: GenAIThinkingLevel.HIGH,
 } as const;
 
 type GenerationConfig = Omit<GenerateContentConfig, 'mediaResolution' | 'safetySettings'> & {
@@ -83,7 +84,7 @@ type InternalBuildGenerationConfigOptions = {
   isGoogleSearchEnabled?: boolean;
   isCodeExecutionEnabled?: boolean;
   isUrlContextEnabled?: boolean;
-  thinkingLevel?: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
+  thinkingLevel?: ThinkingLevel;
   aspectRatio?: string;
   isDeepSearchEnabled?: boolean;
   imageSize?: string;

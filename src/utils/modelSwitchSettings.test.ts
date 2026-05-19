@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { useModelPreferencesStore } from '@/stores/modelPreferencesStore';
-import { MediaResolution } from '@/types/settings';
+import { MediaResolution, type ThinkingLevel } from '@/types/settings';
 import { resolveModelSwitchSettings } from './modelSwitchSettings';
 
 beforeEach(() => {
@@ -16,7 +16,7 @@ const resolveModelSwitchForTarget = (
   targetModelId: string,
   overrides: Partial<{
     thinkingBudget: number;
-    thinkingLevel: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
+    thinkingLevel: ThinkingLevel;
   }> = {},
 ) =>
   resolveModelSwitchSettings({

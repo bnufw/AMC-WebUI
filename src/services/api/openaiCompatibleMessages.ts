@@ -76,6 +76,9 @@ const partsToOpenAIContent = (parts: Part[]): OpenAIMessageContent => {
   return contentItems;
 };
 
+const hasOpenAIContent = (content: OpenAIMessageContent) =>
+  typeof content === 'string' ? content.trim().length > 0 : content.length > 0;
+
 const buildOpenAICompatibleMessages = (
   history: ChatHistoryItem[],
   parts: Part[],
@@ -91,7 +94,7 @@ const buildOpenAICompatibleMessages = (
 
   for (const item of history) {
     const content = partsToOpenAIContent(item.parts);
-    if ((typeof content === 'string' && !content.trim()) || (Array.isArray(content) && content.length === 0)) {
+    if (!hasOpenAIContent(content)) {
       continue;
     }
 
@@ -102,10 +105,7 @@ const buildOpenAICompatibleMessages = (
   }
 
   const currentContent = partsToOpenAIContent(parts);
-  if (
-    (typeof currentContent === 'string' && currentContent.trim()) ||
-    (Array.isArray(currentContent) && currentContent.length > 0)
-  ) {
+  if (hasOpenAIContent(currentContent)) {
     messages.push({
       role: role === 'model' ? 'assistant' : 'user',
       content: currentContent,

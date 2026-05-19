@@ -32,6 +32,7 @@ export enum MediaResolution {
 export type ImageOutputMode = 'IMAGE_TEXT' | 'IMAGE_ONLY';
 export type ImagePersonGeneration = 'ALLOW_ADULT' | 'ALLOW_ALL' | 'DONT_ALLOW';
 export type ApiMode = 'gemini-native' | 'openai-compatible';
+export type ThinkingLevel = 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
 export type LiveArtifactsPromptMode = 'inline' | 'full' | 'fullHtml';
 export type LiveArtifactsSystemPrompts = Record<LiveArtifactsPromptMode, string>;
 export type TranslationTargetLanguage =
@@ -66,7 +67,7 @@ export interface ChatSettings {
   systemInstruction: string;
   ttsVoice: string;
   thinkingBudget: number;
-  thinkingLevel?: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
+  thinkingLevel?: ThinkingLevel;
   lockedApiKey?: string | null;
   isGoogleSearchEnabled?: boolean;
   isCodeExecutionEnabled?: boolean;

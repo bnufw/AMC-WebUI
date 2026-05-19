@@ -1,6 +1,6 @@
 import { useMemo, type FC } from 'react';
 import { Zap } from 'lucide-react';
-import { type ModelOption } from '@/types';
+import { type ModelOption, type ThinkingLevel } from '@/types';
 import { useI18n } from '@/contexts/I18nContext';
 import { GoogleSpinner } from '@/components/icons/GoogleSpinner';
 import { ModelPicker } from '@/components/shared/ModelPicker';
@@ -13,8 +13,8 @@ interface HeaderModelSelectorProps {
   onSelectModel: (modelId: string) => void;
   isSwitchingModel: boolean;
   isLoading: boolean;
-  thinkingLevel?: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
-  onSetThinkingLevel: (level: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH') => void;
+  thinkingLevel?: ThinkingLevel;
+  onSetThinkingLevel: (level: ThinkingLevel) => void;
   showThoughts?: boolean;
   onToggleGemmaReasoning: () => void;
 }

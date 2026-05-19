@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import type { ApiMode, MediaResolution, ModelOption } from '@/types';
+import type { ApiMode, MediaResolution, ModelOption, ThinkingLevel } from '@/types';
 import {
   createPersistedStateStorage,
   readPersistentStorageItem,
@@ -15,7 +15,7 @@ const LEGACY_MODEL_SETTINGS_CACHE_KEY = 'model_settings_cache';
 export interface CachedModelSettings {
   mediaResolution?: MediaResolution;
   thinkingBudget?: number;
-  thinkingLevel?: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
+  thinkingLevel?: ThinkingLevel;
 }
 
 interface ModelPreferencesState {

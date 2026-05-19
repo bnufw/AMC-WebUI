@@ -8,7 +8,13 @@ import { logService } from '@/services/logService';
 import { getTranslator } from '@/i18n/translations';
 import { applyThemeToDocument } from '@/utils/uiUtils';
 import { useUIStore } from '@/stores/uiStore';
-import { type AppSettings, type ChatSettings, type ModelOption, type SideViewContent } from '@/types';
+import {
+  type AppSettings,
+  type ChatSettings,
+  type ModelOption,
+  type SideViewContent,
+  type ThinkingLevel,
+} from '@/types';
 import { isOpenAICompatibleApiActive } from '@/utils/openaiCompatibleMode';
 import { useDataExport } from '@/hooks/data-management/useDataExport';
 import { useDataImport } from '@/hooks/data-management/useDataImport';
@@ -203,7 +209,7 @@ export const useApp = () => {
   });
 
   const handleSetThinkingLevel = useCallback(
-    (level: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH') => {
+    (level: ThinkingLevel) => {
       const activeModelId = currentChatSettings.modelId || appSettings.modelId;
       const shouldUseThinkingPresets = getModelCapabilities(activeModelId).supportsThinkingLevel;
 

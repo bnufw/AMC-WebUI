@@ -7,18 +7,17 @@ import { getCachedModelCapabilities } from '@/stores/modelCapabilitiesStore';
 import { ThinkingModeSelector } from './ThinkingModeSelector';
 import { ThinkingLevelSelector } from './ThinkingLevelSelector';
 import { ThinkingBudgetSlider } from './ThinkingBudgetSlider';
+import type { ThinkingLevel } from '@/types';
 
 interface ThinkingControlProps {
   modelId: string;
   thinkingBudget: number;
   setThinkingBudget: (value: number) => void;
-  thinkingLevel?: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
-  setThinkingLevel?: (value: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH') => void;
+  thinkingLevel?: ThinkingLevel;
+  setThinkingLevel?: (value: ThinkingLevel) => void;
   showThoughts: boolean;
   setShowThoughts: (value: boolean) => void;
 }
-
-type ThinkingLevelOption = 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
 
 export const ThinkingControl: FC<ThinkingControlProps> = ({
   modelId,
@@ -40,7 +39,7 @@ export const ThinkingControl: FC<ThinkingControlProps> = ({
   const isGemma = capabilities.isGemmaModel;
   const isTtsModel = capabilities.isTtsModel;
   const budgetConfig = THINKING_BUDGET_RANGES[modelId];
-  const supportedThinkingLevels: ThinkingLevelOption[] = isImageThinkingLevelOnly
+  const supportedThinkingLevels: ThinkingLevel[] = isImageThinkingLevelOnly
     ? ['MINIMAL', 'HIGH']
     : supportsThinkingLevel
       ? isFlash3 || isRobotics
@@ -62,7 +61,7 @@ export const ThinkingControl: FC<ThinkingControlProps> = ({
   // Determine current mode
   const mode = thinkingBudget < 0 ? 'auto' : thinkingBudget === 0 ? 'off' : 'custom';
   const showThinkingControls = !isTtsModel && (!!budgetConfig || isGemini3 || isGemma);
-  const gemmaThinkingLevel: ThinkingLevelOption = showThoughts ? 'HIGH' : 'MINIMAL';
+  const gemmaThinkingLevel: ThinkingLevel = showThoughts ? 'HIGH' : 'MINIMAL';
 
   useEffect(() => {
     if (thinkingBudget > 0) {

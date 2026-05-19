@@ -49,9 +49,13 @@ describe('test infrastructure guardrails', () => {
   it('keeps shared test renderer cleanup out of individual test suites', () => {
     const explicitRendererLifecycleFiles = new Set([
       'src/components/modals/CreateTextFileEditor.preferences.test.tsx',
-      'src/components/message/blocks/lazyDiagramLoading.test.tsx',
+      'src/components/message/blocks/lazy-diagram-loading.test.tsx',
       'src/components/shared/file-preview/MarkdownFileViewer.test.tsx',
     ]);
+    for (const relativePath of explicitRendererLifecycleFiles) {
+      expect(fs.existsSync(path.join(projectRoot, relativePath)), relativePath).toBe(true);
+    }
+
     const testFiles = listProjectSourceFiles('src').filter(
       (relativePath) => /\.(test|spec)\.(ts|tsx)$/.test(relativePath) && relativePath !== thisTestFile,
     );

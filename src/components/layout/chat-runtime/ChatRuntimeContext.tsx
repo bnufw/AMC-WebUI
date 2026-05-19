@@ -9,14 +9,13 @@ import type {
   LiveClientFunctions,
   ModelOption,
   SideViewContent,
+  ThinkingLevel,
   UploadedFile,
   VideoMetadata,
 } from '@/types';
 import type { MediaResolution } from '@/types/settings';
 import { isOpenAICompatibleApiActive } from '@/utils/openaiCompatibleMode';
 import { CHAT_INPUT_TEXTAREA_SELECTOR } from '@/constants/appConstants';
-
-type ThinkingLevel = 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
 
 interface ChatHeaderRuntimeValue {
   isAppDraggingOver: boolean;

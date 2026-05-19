@@ -114,6 +114,18 @@ describe('code style boundaries', () => {
     expect(eslintConfig).not.toContain('src/components/icons/CustomIcons.tsx');
   });
 
+  it('keeps the src/test ESLint override focused on test-only module exports', () => {
+    const eslintConfig = readProjectFile('eslint.config.js');
+    const srcTestOverrideMatch = eslintConfig.match(
+      /files: \['src\/test\/\*\*\/\*\.\{ts,tsx\}'\],[\s\S]*?rules: \{([\s\S]*?)\n\s*\},\n\s*\},/,
+    );
+
+    expect(srcTestOverrideMatch?.[1]).toContain("'react-refresh/only-export-components': 'off'");
+    for (const ruleName of ['react-hooks/immutability', 'react-hooks/purity', 'react-hooks/refs']) {
+      expect(srcTestOverrideMatch?.[1]).not.toContain(ruleName);
+    }
+  });
+
   it('does not repeat static import declarations from the same module', () => {
     const offenders = listProjectSourceFiles('src')
       .filter((relativePath) => relativePath !== 'src/test/architecture/codeStyleBoundaries.test.ts')
@@ -178,7 +190,7 @@ describe('code style boundaries', () => {
     const prettierIgnore = readProjectFile('.prettierignore');
 
     expect(packageJson.scripts?.clean).toBe(
-      'rm -rf dist server/dist coverage playwright-report test-results tmp-live-artifact-demo .playwright-visible-demo-profile .codex-dev-server.*',
+      'rm -rf dist server/dist coverage playwright-report test-results tmp-live-artifact-demo .playwright-visible-demo-profile .codex-dev-*',
     );
 
     for (const ignoredPath of [
@@ -188,6 +200,7 @@ describe('code style boundaries', () => {
       '.playwright-visible-demo-profile/',
       'tmp-live-artifact-demo/',
       'server/dist/',
+      '.codex-dev-*',
     ]) {
       expect(prettierIgnore).toContain(ignoredPath);
     }
@@ -201,6 +214,17 @@ describe('code style boundaries', () => {
     expect(packageJson.scripts?.['build:docker']).toBe('npm run build && npm run build:api');
     expect(fs.existsSync(path.join(projectRoot, 'scripts/runVitest.mjs'))).toBe(false);
     expect(fs.existsSync(path.join(projectRoot, 'scripts/run-vitest.mjs'))).toBe(true);
+  });
+
+  it('uses the shared ThinkingLevel type instead of repeating the literal union in source files', () => {
+    const thinkingLevelUnionPattern =
+      /'MINIMAL'\s*\|\s*'LOW'\s*\|\s*'MEDIUM'\s*\|\s*'HIGH'|'LOW'\s*\|\s*'HIGH'\s*\|\s*'MINIMAL'\s*\|\s*'MEDIUM'/;
+    const allowedFiles = new Set(['src/types/settings.ts', 'src/test/architecture/codeStyleBoundaries.test.ts']);
+    const offenders = listProjectSourceFiles('src')
+      .filter((relativePath) => !allowedFiles.has(relativePath))
+      .filter((relativePath) => thinkingLevelUnionPattern.test(readProjectFile(relativePath)));
+
+    expect(offenders).toEqual([]);
   });
 
   it('keeps Vite configuration focused on assembly instead of local API internals', () => {
@@ -225,6 +249,15 @@ describe('code style boundaries', () => {
     expect(pyodideService).not.toContain('self.onmessage = async');
     expect(pyodideWorkerTemplate).toContain('__PYODIDE_BASE_URL__');
     expect(pyodideWorkerTemplate).toContain('self.onmessage = async');
+  });
+
+  it('names Live API reconnection constants at the module boundary', () => {
+    const liveConnectionSource = readProjectFile('src/hooks/live-api/useLiveConnection.ts');
+
+    expect(liveConnectionSource).toContain('const MAX_RECONNECT_RETRIES = 5;');
+    expect(liveConnectionSource).toContain('const RECONNECT_BASE_DELAY_MS = 1000;');
+    expect(liveConnectionSource).not.toContain('const maxRetries = 5;');
+    expect(liveConnectionSource).not.toContain('const baseDelay = 1000;');
   });
 
   it('keeps core type comments focused on domain meaning instead of change history', () => {

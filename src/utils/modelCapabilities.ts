@@ -1,4 +1,5 @@
 import { GEMINI_3_RO_MODELS, MODELS_SUPPORTING_RAW_MODE } from '@/constants/modelConstants';
+import type { ThinkingLevel } from '@/types';
 
 export const isGemini3Model = (modelId: string): boolean => {
   if (!modelId) return false;
@@ -178,10 +179,7 @@ export const normalizeImageSizeForModel = (modelId: string, imageSize?: string):
   return supportedImageSizes[0];
 };
 
-export const getDefaultThinkingLevelForModel = (
-  modelId: string,
-  fallback: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH' = 'HIGH',
-): 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH' => {
+export const getDefaultThinkingLevelForModel = (modelId: string, fallback: ThinkingLevel = 'HIGH'): ThinkingLevel => {
   if (isGemini31FlashLiveModel(modelId) || isGemini31FlashImageModel(modelId)) {
     return 'MINIMAL';
   }

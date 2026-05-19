@@ -163,6 +163,16 @@ describe('chat input architecture guardrails', () => {
     }
   });
 
+  it('keeps full composer behavior tests on the shared chat input harness', () => {
+    const harnessPath = 'src/test/chatInputHarness.tsx';
+    const chatInputTestSource = readProjectFile('src/components/chat/input/ChatInput.test.tsx');
+
+    expect(fs.existsSync(path.join(projectRoot, harnessPath))).toBe(true);
+    expect(chatInputTestSource).toContain("from '@/test/chatInputHarness'");
+    expect(chatInputTestSource).not.toContain("vi.mock('./ChatInputArea'");
+    expect(chatInputTestSource).not.toContain('const mockChatStoreState = vi.hoisted');
+  });
+
   it('shares temporary processing file placeholders across upload flows', () => {
     expect(fs.existsSync(path.join(projectRoot, 'src/hooks/file-upload/fileUploadPolicy.ts'))).toBe(true);
     expect(fs.existsSync(path.join(projectRoot, 'src/hooks/file-upload/utils.ts'))).toBe(false);

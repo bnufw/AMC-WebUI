@@ -1,4 +1,10 @@
-import { type AppSettings, type FilesApiConfig, type ModelOption, type TranslationTargetLanguage } from '@/types';
+import {
+  type AppSettings,
+  type FilesApiConfig,
+  type ModelOption,
+  type ThinkingLevel,
+  type TranslationTargetLanguage,
+} from '@/types';
 import { HarmCategory, HarmBlockThreshold, type SafetySetting, MediaResolution } from '@/types/settings';
 import {
   DEFAULT_MODEL_ID,
@@ -75,7 +81,7 @@ export const DEFAULT_CHAT_SETTINGS = {
   systemInstruction: DEFAULT_SYSTEM_INSTRUCTION,
   ttsVoice: DEFAULT_TTS_VOICE,
   thinkingBudget: DEFAULT_THINKING_BUDGET,
-  thinkingLevel: DEFAULT_THINKING_LEVEL as 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH',
+  thinkingLevel: DEFAULT_THINKING_LEVEL as ThinkingLevel,
   lockedApiKey: null,
   isGoogleSearchEnabled: false,
   isCodeExecutionEnabled: false,

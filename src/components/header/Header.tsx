@@ -4,7 +4,7 @@ import { Wand2, PictureInPicture, PictureInPicture2 } from 'lucide-react';
 import { IconNewChat, IconSidebarToggle, IconScenarios } from '@/components/icons';
 import { useI18n } from '@/contexts/I18nContext';
 import { getCachedModelCapabilities } from '@/stores/modelCapabilitiesStore';
-import { type ModelOption } from '@/types';
+import { type ModelOption, type ThinkingLevel } from '@/types';
 
 import { HeaderModelSelector } from './HeaderModelSelector';
 
@@ -26,8 +26,8 @@ interface HeaderProps {
   isPipActive: boolean;
   onTogglePip: () => void;
   themeId: string;
-  thinkingLevel?: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH';
-  onSetThinkingLevel: (level: 'MINIMAL' | 'LOW' | 'MEDIUM' | 'HIGH') => void;
+  thinkingLevel?: ThinkingLevel;
+  onSetThinkingLevel: (level: ThinkingLevel) => void;
   showThoughts: boolean;
   onToggleGemmaReasoning: () => void;
   newChatShortcut: string;

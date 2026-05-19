@@ -117,6 +117,13 @@ describe('project structure boundaries', () => {
     expect(openAiSpellingOffenders).toEqual([]);
   });
 
+  it('keeps IndexedDB migration comments complete across schema versions', () => {
+    const dbServiceSource = readProjectFile('src/services/db/dbService.ts');
+
+    expect(dbServiceSource).toContain('const DB_VERSION = 5;');
+    for (const version of [1, 2, 3, 4, 5]) expect(dbServiceSource).toContain(`Version ${version}:`);
+  });
+
   it('keeps Live API hook names on the same Api casing as the rest of the codebase', () => {
     const sourceFiles = listProjectSourceFiles('src').filter(
       (relativePath) => relativePath !== 'src/test/architecture/projectStructureBoundaries.test.ts',
