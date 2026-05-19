@@ -5,7 +5,7 @@ import {
   toCountTokensConfig,
 } from './generationConfig';
 import { DEFAULT_APP_SETTINGS } from '@/constants/appConstants';
-import { MediaResolution, type ThinkingLevel } from '@/types/settings';
+import { MediaResolution, type ThinkingLevel } from '@/types';
 
 vi.mock('@/services/logService', async () => {
   const { createLogServiceMockModule } = await import('@/test/moduleMockDoubles');

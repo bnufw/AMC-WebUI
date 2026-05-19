@@ -27,6 +27,7 @@ describe('codebase maintainability guardrails', () => {
   it('does not keep pure barrel files for split utilities and APIs', () => {
     expect(fs.existsSync(path.join(projectRoot, 'src/utils/appUtils.ts'))).toBe(false);
     expect(fs.existsSync(path.join(projectRoot, 'src/utils/modelHelpers.ts'))).toBe(false);
+    expect(fs.existsSync(path.join(projectRoot, 'src/utils/uiUtils.ts'))).toBe(false);
     expect(fs.existsSync(path.join(projectRoot, 'src/services/api/baseApi.ts'))).toBe(false);
     expect(fs.existsSync(path.join(projectRoot, 'src/features/chat/input/index.ts'))).toBe(false);
   });

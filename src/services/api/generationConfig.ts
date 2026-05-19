@@ -13,7 +13,7 @@ import {
   type ImagePersonGeneration,
   type SafetySetting,
   type ThinkingLevel,
-} from '@/types/settings';
+} from '@/types';
 import { logService } from '@/services/logService';
 import {
   getModelCapabilities,

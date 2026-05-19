@@ -1,10 +1,9 @@
-import { type ChatMessage, type ContentPart, type UploadedFile, type ChatHistoryItem } from '@/types';
+import { type ChatMessage, type ContentPart, type UploadedFile, type ChatHistoryItem, MediaResolution } from '@/types';
 import type { PartMediaResolutionLevel } from '@google/genai';
 import { logService } from '@/services/logService';
 import { isGemini3Model } from '@/utils/modelCapabilities';
 import { blobToBase64, fileToString } from '@/utils/fileHelpers';
 import { getFileKindFlags, isImageMimeType, isTextFile } from '@/utils/fileTypeUtils';
-import { MediaResolution } from '@/types/settings';
 
 import { usesRemoteFileReference } from './fileTransferStrategy';
 import { stripReasoningMarkup } from './reasoning';

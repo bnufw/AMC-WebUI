@@ -9,7 +9,6 @@ import type { Part, UsageMetadata } from '@google/genai';
 import { useApiErrorHandler } from './useApiErrorHandler';
 import { logService } from '@/services/logService';
 import { calculateTokenStats } from '@/utils/modelUsageStats';
-import { showNotification, playCompletionSound } from '@/utils/uiUtils';
 import { finalizeMessages } from '@/features/chat-streaming/processors';
 import { streamingStore } from '@/services/streamingStore';
 import { buildExactPricingFromUsageMetadata } from '@/utils/usagePricingTelemetry';
@@ -22,6 +21,7 @@ import {
   reduceMessageStreamEvent,
 } from '@/features/chat-streaming/messageStreamReducer';
 import { finishActiveGenerationJob } from './activeGenerationJobs';
+import { buildCompletionNotificationBody, emitCompletionFeedback } from './completionFeedback';
 
 type SessionsUpdater = (
   updater: (prev: SavedChatSession[]) => SavedChatSession[],
@@ -184,21 +184,18 @@ export const useChatStreamHandler = ({
               });
 
               if (finalizationResult.completedMessageForNotification) {
-                if (appSettings.isCompletionSoundEnabled) {
-                  playCompletionSound();
-                }
-                if (appSettings.isCompletionNotificationEnabled && document.hidden) {
-                  const msg = finalizationResult.completedMessageForNotification;
-                  const notificationBody =
-                    (msg.content || 'Media or tool response received').substring(0, 150) +
-                    (msg.content && msg.content.length > 150 ? '...' : '');
-                  void import('@/constants/assets').then(({ APP_LOGO_SVG_DATA_URI }) => {
-                    showNotification('Response Ready', {
-                      body: notificationBody,
-                      icon: APP_LOGO_SVG_DATA_URI,
-                    });
-                  });
-                }
+                void emitCompletionFeedback(
+                  {
+                    isCompletionNotificationEnabled: appSettings.isCompletionNotificationEnabled,
+                    isCompletionSoundEnabled: appSettings.isCompletionSoundEnabled,
+                  },
+                  {
+                    notification: {
+                      title: 'Response Ready',
+                      body: buildCompletionNotificationBody(finalizationResult.completedMessageForNotification),
+                    },
+                  },
+                );
               }
 
               return {

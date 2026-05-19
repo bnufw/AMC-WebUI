@@ -8,11 +8,8 @@ import {
   type ChatMessage,
   type InputCommand,
 } from '@/types';
-import {
-  ACTIVE_CHAT_SESSION_ID_KEY,
-  CHAT_INPUT_TEXTAREA_SELECTOR,
-  DEFAULT_CHAT_SETTINGS,
-} from '@/constants/appConstants';
+import { DEFAULT_CHAT_SETTINGS } from '@/constants/appConstants';
+import { ACTIVE_CHAT_SESSION_ID_KEY, CHAT_INPUT_TEXTAREA_SELECTOR } from '@/constants/storageKeys';
 import { logService } from '@/services/logService';
 import { createNewSession, rehydrateSessionFiles } from '@/utils/chat/session';
 import { cleanupFilePreviewUrls } from '@/utils/fileHelpers';

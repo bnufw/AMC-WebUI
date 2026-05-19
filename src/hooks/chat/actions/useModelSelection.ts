@@ -1,6 +1,7 @@
 import { type MutableRefObject, useCallback } from 'react';
 import { type AppSettings, type ChatSettings as IndividualChatSettings, type SavedChatSession } from '@/types';
-import { CHAT_INPUT_TEXTAREA_SELECTOR, DEFAULT_CHAT_SETTINGS } from '@/constants/appConstants';
+import { DEFAULT_CHAT_SETTINGS } from '@/constants/appConstants';
+import { CHAT_INPUT_TEXTAREA_SELECTOR } from '@/constants/storageKeys';
 import { createNewSession } from '@/utils/chat/session';
 import { resolveModelSwitchSettings } from '@/utils/modelSwitchSettings';
 

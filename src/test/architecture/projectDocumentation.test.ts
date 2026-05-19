@@ -7,11 +7,11 @@ const projectRoot = path.resolve(__dirname, '../../..');
 const readProjectFile = (relativePath: string) => fs.readFileSync(path.join(projectRoot, relativePath), 'utf8');
 
 describe('project documentation structure', () => {
-  it('keeps the shared chat input selector in tracked app constants', () => {
+  it('keeps the shared chat input selector in the focused storage constants module', () => {
     const appConstants = readProjectFile('src/constants/appConstants.ts');
     const storageKeys = readProjectFile('src/constants/storageKeys.ts');
 
-    expect(appConstants).toContain("export * from './storageKeys';");
+    expect(appConstants).not.toContain("export * from './storageKeys';");
     expect(storageKeys).toContain('export const CHAT_INPUT_TEXTAREA_SELECTOR');
     expect(fs.existsSync(path.join(projectRoot, 'src/constants/domSelectors.ts'))).toBe(false);
   });

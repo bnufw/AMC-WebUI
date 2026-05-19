@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { useModelPreferencesStore } from '@/stores/modelPreferencesStore';
-import { MediaResolution, type ThinkingLevel } from '@/types/settings';
+import { MediaResolution, type ThinkingLevel } from '@/types';
 import { resolveModelSwitchSettings } from './modelSwitchSettings';
 
 beforeEach(() => {
@@ -70,10 +70,19 @@ describe('thinking budget adjustment', () => {
 
   it('keeps auto (-1) for Gemini 3 models', () => {
     expect(resolveModelSwitchForTarget('gemini-3-flash-preview', { thinkingBudget: -1 }).thinkingBudget).toBe(-1);
+    expect(resolveModelSwitchForTarget('gemini-3.5-flash-preview', { thinkingBudget: -1 }).thinkingBudget).toBe(-1);
   });
 
   it('forces Gemini 3 mandatory thinking models with 0 budget to auto', () => {
     expect(resolveModelSwitchForTarget('gemini-3-flash-preview', { thinkingBudget: 0 }).thinkingBudget).toBe(-1);
+    expect(resolveModelSwitchForTarget('gemini-3.5-flash-preview', { thinkingBudget: 0 }).thinkingBudget).toBe(-1);
+  });
+
+  it('clamps Gemini 3.5 Flash budgets to the same range as Gemini 3 Flash', () => {
+    expect(resolveModelSwitchForTarget('gemini-3.5-flash-preview', { thinkingBudget: 10 }).thinkingBudget).toBe(128);
+    expect(resolveModelSwitchForTarget('gemini-3.5-flash-preview', { thinkingBudget: 50000 }).thinkingBudget).toBe(
+      32768,
+    );
   });
 
   it('keeps valid budget within range', () => {

@@ -4,10 +4,11 @@ import {
   type ChatMessage,
   type UploadedFile,
   type ChatSettings as IndividualChatSettings,
+  type ImageOutputMode,
+  type ImagePersonGeneration,
 } from '@/types';
 import { useI18n } from '@/contexts/I18nContext';
 import { logService } from '@/services/logService';
-import type { ImageOutputMode, ImagePersonGeneration } from '@/types/settings';
 import { getApiKeyErrorTranslationKey } from '@/utils/apiUtils';
 import { CODE_EXECUTION_TEXT_FILE_LIMIT_BYTES, isServerCodeExecutionMode } from '@/utils/codeExecution';
 import { isImageMimeType, isPdfMimeType, isTextFile } from '@/utils/fileTypeUtils';

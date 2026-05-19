@@ -1,6 +1,6 @@
-import { MODELS_MANDATORY_THINKING, THINKING_BUDGET_RANGES } from '@/constants/appConstants';
+import { MODELS_MANDATORY_THINKING, THINKING_BUDGET_RANGES } from '@/constants/modelConstants';
 import { useModelPreferencesStore, type CachedModelSettings } from '@/stores/modelPreferencesStore';
-import { MediaResolution } from '@/types/settings';
+import { MediaResolution } from '@/types';
 
 import { getDefaultThinkingLevelForModel, isGemini3Model } from './modelCapabilities';
 

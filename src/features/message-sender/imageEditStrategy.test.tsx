@@ -65,7 +65,7 @@ vi.mock('@/utils/modelCapabilities', () => ({
   shouldStripThinkingFromContext: vi.fn(() => false),
 }));
 
-vi.mock('@/utils/uiUtils', () => ({
+vi.mock('@/utils/completionFeedback', () => ({
   playCompletionSound: vi.fn(),
 }));
 

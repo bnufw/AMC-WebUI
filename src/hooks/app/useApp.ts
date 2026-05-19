@@ -6,7 +6,7 @@ import { useAppEvents } from '@/hooks/core/useAppEvents';
 import { usePictureInPicture } from '@/hooks/core/usePictureInPicture';
 import { logService } from '@/services/logService';
 import { getTranslator } from '@/i18n/translations';
-import { applyThemeToDocument } from '@/utils/uiUtils';
+import { applyThemeToDocument } from '@/utils/themeDom';
 import { useUIStore } from '@/stores/uiStore';
 import {
   type AppSettings,

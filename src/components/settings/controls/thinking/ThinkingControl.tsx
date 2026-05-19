@@ -1,7 +1,7 @@
 import { useState, useEffect, type FC } from 'react';
 import { useI18n } from '@/contexts/I18nContext';
 import { Info, Lightbulb } from 'lucide-react';
-import { THINKING_BUDGET_RANGES, MODELS_MANDATORY_THINKING } from '@/constants/appConstants';
+import { THINKING_BUDGET_RANGES, MODELS_MANDATORY_THINKING } from '@/constants/modelConstants';
 import { Tooltip } from '@/components/shared/Tooltip';
 import { getCachedModelCapabilities } from '@/stores/modelCapabilitiesStore';
 import { ThinkingModeSelector } from './ThinkingModeSelector';
