@@ -297,6 +297,10 @@ const appSettingsSchema: z.ZodType<AppSettings> = z.object({
   ),
   liveArtifactsSystemPrompt: optionalStringWithDefault(DEFAULT_APP_SETTINGS.liveArtifactsSystemPrompt),
   liveArtifactsSystemPrompts: liveArtifactsSystemPromptsSchema,
+  liveArtifactsCustomFontSize: optionalWithDefault(
+    z.number().finite().min(10).max(32),
+    DEFAULT_APP_SETTINGS.liveArtifactsCustomFontSize,
+  ),
   isPasteRichTextAsMarkdownEnabled: optionalBooleanWithDefault(DEFAULT_APP_SETTINGS.isPasteRichTextAsMarkdownEnabled),
   isPasteAsTextFileEnabled: optionalBooleanWithDefault(DEFAULT_APP_SETTINGS.isPasteAsTextFileEnabled),
   showInputPasteButton: optionalBooleanWithDefault(DEFAULT_APP_SETTINGS.showInputPasteButton),

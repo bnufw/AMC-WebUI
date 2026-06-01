@@ -17,6 +17,7 @@ import {
   USER_MESSAGE_COLLAPSE_LINE_THRESHOLD,
   type UserMessageCollapseController,
 } from './userMessageCollapse';
+import { resolveLiveArtifactsFontSize } from '@/utils/liveArtifactsFontSize';
 
 interface MessageTextProps {
   message: ChatMessage;
@@ -75,6 +76,7 @@ export const MessageText: React.FC<MessageTextProps> = ({
   const isUserMessageCollapsed = shouldOfferUserMessageCollapse && !isUserMessageExpanded;
   const userMessageCollapseRegionId = `${message.id}-message-text`;
   const collapsedMaxHeight = baseFontSize * USER_MESSAGE_COLLAPSED_LINE_HEIGHT * USER_MESSAGE_COLLAPSE_LINE_THRESHOLD;
+  const liveArtifactFontSize = useMemo(() => resolveLiveArtifactsFontSize(appSettings), [appSettings]);
 
   const prevIsLoadingRef = useRef(isLoading);
   useEffect(() => {
@@ -130,6 +132,7 @@ export const MessageText: React.FC<MessageTextProps> = ({
           themeId={themeId}
           onOpenSidePanel={onOpenSidePanel}
           files={message.files}
+          liveArtifactFontSize={liveArtifactFontSize}
         />
       ) : effectiveContent ? (
         <div data-user-message-collapsed={shouldOfferUserMessageCollapse ? String(isUserMessageCollapsed) : undefined}>
@@ -155,6 +158,7 @@ export const MessageText: React.FC<MessageTextProps> = ({
                 onOpenSidePanel={onOpenSidePanel}
                 hideThinkingInContext={appSettings.hideThinkingInContext}
                 files={message.files}
+                liveArtifactFontSize={liveArtifactFontSize}
               />
             </div>
           </div>

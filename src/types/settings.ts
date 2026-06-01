@@ -127,6 +127,7 @@ export interface AppSettings extends ChatSettings {
   liveArtifactsPromptMode?: LiveArtifactsPromptMode;
   liveArtifactsSystemPrompt?: string;
   liveArtifactsSystemPrompts?: LiveArtifactsSystemPrompts;
+  liveArtifactsCustomFontSize?: number;
   isPasteRichTextAsMarkdownEnabled?: boolean;
   isPasteAsTextFileEnabled?: boolean;
   showInputPasteButton?: boolean;

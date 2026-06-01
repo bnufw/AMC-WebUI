@@ -57,6 +57,22 @@ describe('appSettingsSchema', () => {
     expect(fullHtmlSettings.liveArtifactsPromptMode).toBe('inline');
   });
 
+  it('preserves valid Live Artifacts custom font size settings from imported settings', () => {
+    const settings = sanitizeImportedAppSettings({
+      liveArtifactsCustomFontSize: 22,
+    });
+
+    expect(settings.liveArtifactsCustomFontSize).toBe(22);
+  });
+
+  it('falls back for invalid Live Artifacts custom font size settings', () => {
+    const settings = sanitizeImportedAppSettings({
+      liveArtifactsCustomFontSize: 99,
+    });
+
+    expect(settings.liveArtifactsCustomFontSize).toBe(16);
+  });
+
   it('preserves valid MCP server settings from imported settings', () => {
     const settings = sanitizeImportedAppSettings({
       mcpServers: [

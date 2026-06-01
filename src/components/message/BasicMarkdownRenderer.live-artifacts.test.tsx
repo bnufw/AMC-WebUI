@@ -135,6 +135,18 @@ describe('BasicMarkdownRenderer Live Artifacts', () => {
     expect(renderer.container.querySelector('pre')).toBeNull();
   });
 
+  it('passes the configured Live Artifacts font size into artifact frames', () => {
+    renderMarkdown({
+      content: '<section style="display:grid"><strong>Inline Artifact</strong></section>',
+      allowHtml: true,
+      liveArtifactFontSize: 21,
+    });
+
+    const iframe = renderer.container.querySelector('iframe[title="HTML Preview"]');
+
+    expect(iframe?.getAttribute('srcdoc')).toContain('--amc-live-artifact-font-size:21px');
+  });
+
   it('does not show inline action buttons over Live Artifact frames', () => {
     renderMarkdown({
       content: '<section style="display:grid"><strong>Inline Artifact</strong></section>',
