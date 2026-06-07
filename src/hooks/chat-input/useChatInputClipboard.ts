@@ -1,6 +1,6 @@
 import { useCallback, type MutableRefObject, type RefObject } from 'react';
 import type { AppSettings, UploadedFile } from '@/types';
-import { processChatInputClipboardData } from '@/utils/chat-input/clipboardData';
+import { processChatInputClipboardData, shouldHandleChatInputClipboardData } from '@/utils/chat-input/clipboardData';
 import { useI18n } from '@/contexts/I18nContext';
 import { MIME_TO_EXTENSION_MAP, SUPPORTED_IMAGE_MIME_TYPES } from '@/constants/fileTypeSupport';
 
@@ -201,13 +201,32 @@ export const useChatInputClipboard = ({
 
   const handlePaste = useCallback(
     async (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
-      const didHandle = await handlePasteAction(event.clipboardData);
-      if (didHandle) {
+      const canHandlePaste = !isAddingById && !showCreateTextFileEditor && !showRecorder;
+      const clipboardOptions = {
+        isPasteRichTextAsMarkdownEnabled: appSettings.isPasteRichTextAsMarkdownEnabled ?? true,
+        isPasteAsTextFileEnabled: appSettings.isPasteAsTextFileEnabled ?? true,
+      };
+      const pastedText = event.clipboardData.getData('text/plain');
+      const shouldAppHandleClipboardData =
+        shouldHandleChatInputClipboardData(event.clipboardData, clipboardOptions) ||
+        YOUTUBE_URL_REGEX.test(pastedText.trim());
+      const shouldHandle = canHandlePaste && shouldAppHandleClipboardData;
+
+      if (shouldHandle) {
         event.preventDefault();
         event.stopPropagation();
       }
+
+      await handlePasteAction(event.clipboardData, { forceTextInsertion: shouldHandle });
     },
-    [handlePasteAction],
+    [
+      appSettings.isPasteAsTextFileEnabled,
+      appSettings.isPasteRichTextAsMarkdownEnabled,
+      handlePasteAction,
+      isAddingById,
+      showCreateTextFileEditor,
+      showRecorder,
+    ],
   );
 
   const handlePasteFromClipboard = useCallback(async () => {

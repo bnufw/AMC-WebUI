@@ -8,6 +8,7 @@ import { logService } from '@/services/logService';
 import { resolveSupportedModelId, sanitizeModelOptions } from '@/utils/modelSorting';
 import { dbService } from '@/services/db/dbService';
 import { normalizeLiveArtifactsSystemPrompts } from '@/utils/liveArtifactsPromptSettings';
+import { type ConcreteThemeId } from '@/utils/themeMode';
 import { resolveUpdaterOrValue, type UpdaterOrValue } from './stateUpdaters';
 
 const LEGACY_DEFAULT_TRANSCRIPTION_MODEL_ID = 'gemini-3-flash-preview';
@@ -26,11 +27,11 @@ interface SettingsActions {
   broadcastSettingsUpdate: () => void;
 }
 
-function resolveThemeId(themeId: string): 'onyx' | 'pearl' {
+function resolveThemeId(themeId: string): ConcreteThemeId {
   if (themeId === 'system') {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'onyx' : 'pearl';
   }
-  return themeId as 'onyx' | 'pearl';
+  return themeId as ConcreteThemeId;
 }
 
 function resolveLanguage(language: string): 'en' | 'zh' {

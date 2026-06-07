@@ -38,6 +38,7 @@ export const isHdGuideSystemInstruction = (instruction?: string | null) =>
 
 const LIVE_ARTIFACT_PROMPT_THEME_BY_THEME_ID: Partial<Record<string, LiveArtifactsPromptTheme>> = {
   onyx: 'dark',
+  graphite: 'dark',
   pearl: 'light',
 };
 

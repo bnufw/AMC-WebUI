@@ -114,8 +114,66 @@ const PEARL_THEME_COLORS: ThemeColors = {
   iconHistory: '#000000', // Pure Black (was #323232)
 };
 
+const GRAPHITE_THEME_COLORS: ThemeColors = {
+  // Backgrounds
+  bgPrimary: '#2b3038',
+  bgSecondary: '#22272f',
+  bgTertiary: '#49515e',
+  bgAccent: '#60a5fa',
+  bgAccentHover: '#3b82f6',
+  bgDanger: '#7f1d1d',
+  bgDangerHover: '#991b1b',
+  bgInput: '#3f4651',
+  bgCodeBlock: '#20252c',
+  bgCodeBlockHeader: '#2f3540',
+  bgUserMessage: '#3b82f6',
+  bgModelMessage: 'transparent',
+  bgErrorMessage: 'rgba(127, 29, 29, 0.28)',
+  bgSuccess: 'rgba(6, 95, 70, 0.28)',
+  textSuccess: '#86efac',
+  bgInfo: 'rgba(37, 99, 235, 0.22)',
+  textInfo: '#93c5fd',
+  bgWarning: 'rgba(120, 53, 15, 0.28)',
+  textWarning: '#fde68a',
+
+  // Text
+  textPrimary: '#f1f3f5',
+  textSecondary: '#c1c7d0',
+  textTertiary: '#8f98a6',
+  textAccent: '#0f172a',
+  textDanger: '#fca5a5',
+  textLink: '#93c5fd',
+  textCode: '#f1f5f9',
+  bgUserMessageText: '#ffffff',
+  bgModelMessageText: '#f1f3f5',
+  bgErrorMessageText: '#fecaca',
+
+  // Borders
+  borderPrimary: '#414956',
+  borderSecondary: '#5b6472',
+  borderFocus: '#60a5fa',
+
+  // Scrollbar
+  scrollbarThumb: '#5b6472',
+  scrollbarTrack: 'transparent',
+
+  // Icons
+  iconUser: '#ffffff',
+  iconModel: '#93c5fd',
+  iconError: '#f87171',
+  iconThought: '#9ca3af',
+  iconSettings: '#c1c7d0',
+  iconClearChat: '#f1f3f5',
+  iconSend: '#0f172a',
+  iconAttach: '#c1c7d0',
+  iconStop: '#ffffff',
+  iconEdit: '#c1c7d0',
+  iconHistory: '#c1c7d0',
+};
+
 export const AVAILABLE_THEMES: Theme[] = [
   { id: 'onyx', name: 'Onyx (Dark)', colors: ONYX_THEME_COLORS },
+  { id: 'graphite', name: 'Graphite (Gray)', colors: GRAPHITE_THEME_COLORS },
   { id: 'pearl', name: 'Pearl (Light)', colors: PEARL_THEME_COLORS },
 ];
 

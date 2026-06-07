@@ -3,6 +3,7 @@ import {
   isLiveArtifactsSystemInstruction,
   loadDeepSearchSystemPrompt,
   loadLiveArtifactsSystemPrompt,
+  resolveLiveArtifactsPromptTheme,
 } from './promptRegistry';
 
 describe('promptRegistry', () => {
@@ -49,6 +50,10 @@ describe('promptRegistry', () => {
     expect(enLightPrompt).toContain('Current Page Theme');
     expect(enLightPrompt).toContain('light theme');
     expect(enLightPrompt).toContain('color-scheme: light');
+  });
+
+  it('maps graphite to dark Live Artifacts guidance', () => {
+    expect(resolveLiveArtifactsPromptTheme('graphite')).toBe('dark');
   });
 
   it('emphasizes HTML artifacts instead of traditional Markdown output', async () => {
@@ -201,6 +206,22 @@ describe('promptRegistry', () => {
     expect(enPrompt).toContain('readable inside chat bubble');
     expect(enPrompt).toContain('dashboard noise');
     expect(enPrompt).toContain('Layout serves the content, not decoration');
+  });
+
+  it('nudges inline Live Artifacts to respect the configured base font size', async () => {
+    const zhPrompt = await loadLiveArtifactsSystemPrompt('zh');
+    const enPrompt = await loadLiveArtifactsSystemPrompt('en');
+
+    expect(zhPrompt).toContain('继承 Live Artifacts 基础字号');
+    expect(zhPrompt).toContain('em');
+    expect(zhPrompt).toContain('inherit');
+    expect(zhPrompt).toContain('--amc-live-artifact-font-size');
+    expect(zhPrompt).toContain('避免写死大量 px 字号');
+    expect(enPrompt).toContain('inherit the Live Artifacts base font size');
+    expect(enPrompt).toContain('em');
+    expect(enPrompt).toContain('inherit');
+    expect(enPrompt).toContain('--amc-live-artifact-font-size');
+    expect(enPrompt).toContain('avoid many fixed px font sizes');
   });
 
   it('defines the Live Artifacts external image policy', async () => {

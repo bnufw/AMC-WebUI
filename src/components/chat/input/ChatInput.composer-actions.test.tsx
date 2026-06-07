@@ -227,6 +227,97 @@ describe('ChatInput composer actions', () => {
     expect(document.activeElement).toBe(textarea);
   });
 
+  it('prevents the browser default paste synchronously when converting rich text to markdown', async () => {
+    const providerValue = createProviderValue(null);
+    providerValue.input.isEditing = false;
+    providerValue.input.editMode = 'resend';
+    providerValue.input.editingMessageId = null;
+
+    await act(async () => {
+      renderChatInput(providerValue);
+    });
+
+    const textarea = renderer.container.querySelector<HTMLTextAreaElement>('[data-testid="chat-input-textarea"]');
+    expect(textarea).not.toBeNull();
+
+    await act(async () => {
+      if (!textarea) {
+        return;
+      }
+
+      setTextareaValue(textarea, '');
+      textarea.setSelectionRange(0, 0);
+    });
+
+    const pasteEvent = new Event('paste', {
+      bubbles: true,
+      cancelable: true,
+    });
+    Object.defineProperty(pasteEvent, 'clipboardData', {
+      value: {
+        items: [],
+        getData: (type: string) =>
+          type === 'text/html'
+            ? '<p><strong>Hello</strong> <em>world</em></p>'
+            : type === 'text/plain'
+              ? 'Hello world'
+              : '',
+      },
+    });
+
+    let wasPreventedDuringDispatch = false;
+    act(() => {
+      textarea?.dispatchEvent(pasteEvent);
+      wasPreventedDuringDispatch = pasteEvent.defaultPrevented;
+    });
+
+    expect(wasPreventedDuringDispatch).toBe(true);
+    await vi.waitFor(() => {
+      expect(textarea?.value).toBe('**Hello** *world*');
+    });
+  });
+
+  it('leaves regular text paste to the browser default insertion path', async () => {
+    const providerValue = createProviderValue(null);
+    providerValue.input.isEditing = false;
+    providerValue.input.editMode = 'resend';
+    providerValue.input.editingMessageId = null;
+
+    await act(async () => {
+      renderChatInput(providerValue);
+    });
+
+    const textarea = renderer.container.querySelector<HTMLTextAreaElement>('[data-testid="chat-input-textarea"]');
+    expect(textarea).not.toBeNull();
+
+    await act(async () => {
+      if (!textarea) {
+        return;
+      }
+
+      setTextareaValue(textarea, '');
+      textarea.setSelectionRange(0, 0);
+    });
+
+    const pasteEvent = new Event('paste', {
+      bubbles: true,
+      cancelable: true,
+    });
+    Object.defineProperty(pasteEvent, 'clipboardData', {
+      value: {
+        items: [],
+        getData: (type: string) => (type === 'text/plain' ? 'plain clipboard text' : ''),
+      },
+    });
+
+    act(() => {
+      textarea?.dispatchEvent(pasteEvent);
+    });
+
+    expect(pasteEvent.defaultPrevented).toBe(false);
+    expect(textarea?.value).toBe('');
+  });
+
   it('processes clipboard images from the paste action without inserting image filename text', async () => {
     const imageBlob = new Blob(['fake-png'], { type: 'image/png' });
     const getType = vi.fn(async () => imageBlob);
