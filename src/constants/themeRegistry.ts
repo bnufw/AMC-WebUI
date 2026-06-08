@@ -116,17 +116,17 @@ const PEARL_THEME_COLORS: ThemeColors = {
 
 const GRAPHITE_THEME_COLORS: ThemeColors = {
   // Backgrounds
-  bgPrimary: '#2b3038',
-  bgSecondary: '#22272f',
-  bgTertiary: '#49515e',
-  bgAccent: '#60a5fa',
-  bgAccentHover: '#3b82f6',
+  bgPrimary: '#2f2f2f',
+  bgSecondary: '#242424',
+  bgTertiary: '#474747',
+  bgAccent: '#d4d4d4',
+  bgAccentHover: '#f3f3f3',
   bgDanger: '#7f1d1d',
   bgDangerHover: '#991b1b',
-  bgInput: '#3f4651',
-  bgCodeBlock: '#20252c',
-  bgCodeBlockHeader: '#2f3540',
-  bgUserMessage: '#3b82f6',
+  bgInput: '#3f3f3f',
+  bgCodeBlock: '#202020',
+  bgCodeBlockHeader: '#303030',
+  bgUserMessage: '#4a4a4a',
   bgModelMessage: 'transparent',
   bgErrorMessage: 'rgba(127, 29, 29, 0.28)',
   bgSuccess: 'rgba(6, 95, 70, 0.28)',
@@ -137,38 +137,38 @@ const GRAPHITE_THEME_COLORS: ThemeColors = {
   textWarning: '#fde68a',
 
   // Text
-  textPrimary: '#f1f3f5',
-  textSecondary: '#c1c7d0',
-  textTertiary: '#8f98a6',
-  textAccent: '#0f172a',
+  textPrimary: '#f3f3f3',
+  textSecondary: '#c7c7c7',
+  textTertiary: '#9a9a9a',
+  textAccent: '#171717',
   textDanger: '#fca5a5',
-  textLink: '#93c5fd',
-  textCode: '#f1f5f9',
+  textLink: '#e5e5e5',
+  textCode: '#f5f5f5',
   bgUserMessageText: '#ffffff',
-  bgModelMessageText: '#f1f3f5',
+  bgModelMessageText: '#f3f3f3',
   bgErrorMessageText: '#fecaca',
 
   // Borders
-  borderPrimary: '#414956',
-  borderSecondary: '#5b6472',
-  borderFocus: '#60a5fa',
+  borderPrimary: '#454545',
+  borderSecondary: '#626262',
+  borderFocus: '#a3a3a3',
 
   // Scrollbar
-  scrollbarThumb: '#5b6472',
+  scrollbarThumb: '#626262',
   scrollbarTrack: 'transparent',
 
   // Icons
   iconUser: '#ffffff',
-  iconModel: '#93c5fd',
+  iconModel: '#d4d4d4',
   iconError: '#f87171',
   iconThought: '#9ca3af',
-  iconSettings: '#c1c7d0',
-  iconClearChat: '#f1f3f5',
-  iconSend: '#0f172a',
-  iconAttach: '#c1c7d0',
+  iconSettings: '#c7c7c7',
+  iconClearChat: '#f3f3f3',
+  iconSend: '#171717',
+  iconAttach: '#c7c7c7',
   iconStop: '#ffffff',
-  iconEdit: '#c1c7d0',
-  iconHistory: '#c1c7d0',
+  iconEdit: '#c7c7c7',
+  iconHistory: '#c7c7c7',
 };
 
 export const AVAILABLE_THEMES: Theme[] = [
