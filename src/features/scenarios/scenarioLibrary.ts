@@ -31,9 +31,7 @@ interface InitializeScenarioStateResult {
   didChange: boolean;
 }
 
-const DEPRECATED_SCENARIO_IDS = [
-  'cyberpunk-rpg-scenario',
-];
+const DEPRECATED_SCENARIO_IDS = ['cyberpunk-rpg-scenario'];
 
 const SYSTEM_SCENARIOS: SavedScenario[] = [reasonerScenario, succinctScenario, socraticScenario, formalScenario];
 

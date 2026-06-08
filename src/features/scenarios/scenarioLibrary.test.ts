@@ -111,7 +111,7 @@ describe('scenarioLibrary', () => {
     );
 
     // None pruned — jailbreak scenarios are no longer in the deprecated list
-    expect(result.didChange).toBe(true);
+    expect(result.didChange).toBe(false);
     expect(result.userScenarios.map((s) => s.id)).toEqual([
       'fop-scenario-default',
       'unrestricted-scenario-default',
