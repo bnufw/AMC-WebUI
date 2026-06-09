@@ -3,7 +3,6 @@ import {
   isLiveArtifactsSystemInstruction,
   loadDeepSearchSystemPrompt,
   loadLiveArtifactsSystemPrompt,
-  resolveLiveArtifactsPromptTheme,
 } from './promptRegistry';
 
 describe('promptRegistry', () => {
@@ -40,20 +39,18 @@ describe('promptRegistry', () => {
     expect(enPrompt).not.toContain('<!DOCTYPE html>');
   });
 
-  it('adds Live Artifacts theme guidance from the current page theme', async () => {
+  it('keeps Live Artifacts prompts independent from the current page theme', async () => {
+    const zhDefaultPrompt = await loadLiveArtifactsSystemPrompt('zh', 'inline');
     const zhDarkPrompt = await loadLiveArtifactsSystemPrompt('zh', 'inline', 'dark');
     const enLightPrompt = await loadLiveArtifactsSystemPrompt('en', 'inline', 'light');
 
-    expect(zhDarkPrompt).toContain('当前页面主题');
-    expect(zhDarkPrompt).toContain('深色主题');
-    expect(zhDarkPrompt).toContain('color-scheme: dark');
-    expect(enLightPrompt).toContain('Current Page Theme');
-    expect(enLightPrompt).toContain('light theme');
-    expect(enLightPrompt).toContain('color-scheme: light');
-  });
-
-  it('maps graphite to dark Live Artifacts guidance', () => {
-    expect(resolveLiveArtifactsPromptTheme('graphite')).toBe('dark');
+    expect(zhDarkPrompt).toBe(zhDefaultPrompt);
+    expect(zhDarkPrompt).not.toContain('当前页面主题');
+    expect(zhDarkPrompt).not.toContain('深色主题');
+    expect(zhDarkPrompt).not.toContain('color-scheme: dark');
+    expect(enLightPrompt).not.toContain('Current Page Theme');
+    expect(enLightPrompt).not.toContain('light theme');
+    expect(enLightPrompt).not.toContain('color-scheme: light');
   });
 
   it('emphasizes HTML artifacts instead of traditional Markdown output', async () => {
@@ -222,6 +219,28 @@ describe('promptRegistry', () => {
     expect(enPrompt).toContain('inherit');
     expect(enPrompt).toContain('--amc-live-artifact-font-size');
     expect(enPrompt).toContain('avoid many fixed px font sizes');
+  });
+
+  it('nudges inline Live Artifacts to use injected transparent theme tokens', async () => {
+    const zhPrompt = await loadLiveArtifactsSystemPrompt('zh');
+    const enPrompt = await loadLiveArtifactsSystemPrompt('en');
+    const themeTokens = [
+      '--amc-live-artifact-text',
+      '--amc-live-artifact-muted',
+      '--amc-live-artifact-surface',
+      '--amc-live-artifact-border',
+      '--amc-live-artifact-accent',
+    ];
+
+    for (const token of themeTokens) {
+      expect(zhPrompt).toContain(token);
+      expect(enPrompt).toContain(token);
+    }
+
+    expect(zhPrompt).toContain('背景保持透明');
+    expect(zhPrompt).toContain('避免写死深浅主题色');
+    expect(enPrompt).toContain('keep backgrounds transparent');
+    expect(enPrompt).toContain('avoid hard-coding light or dark theme colors');
   });
 
   it('defines the Live Artifacts external image policy', async () => {
