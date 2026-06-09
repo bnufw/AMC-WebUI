@@ -291,6 +291,22 @@ describe('promptRegistry', () => {
     expect(enPrompt).toContain('"instruction"');
   });
 
+  it('routes choice and parameter collection toward interaction artifacts with lightweight controls', async () => {
+    const zhPrompt = await loadLiveArtifactsSystemPrompt('zh');
+    const enPrompt = await loadLiveArtifactsSystemPrompt('en');
+
+    expect(zhPrompt).toContain('选择、偏好、参数');
+    expect(zhPrompt).toContain('format: "range"');
+    expect(zhPrompt).toContain('format: "date"');
+    expect(zhPrompt).toContain('type: "array"');
+    expect(zhPrompt).toContain('items.enum');
+    expect(enPrompt).toContain('choices, preferences, parameters');
+    expect(enPrompt).toContain('format: "range"');
+    expect(enPrompt).toContain('format: "date"');
+    expect(enPrompt).toContain('type: "array"');
+    expect(enPrompt).toContain('items.enum');
+  });
+
   it('keeps interaction artifact fencing instructions in the built-in Live Artifacts prompt', async () => {
     const prompts = await Promise.all([loadLiveArtifactsSystemPrompt('zh'), loadLiveArtifactsSystemPrompt('en')]);
 
