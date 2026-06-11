@@ -119,7 +119,7 @@ export const LogViewer: React.FC<LogViewerProps> = ({
         isOpen={isOpen}
         onClose={onClose}
         backdropClassName="bg-black/70"
-        contentClassName="w-full max-w-5xl h-[95vh]"
+        contentClassName="w-full max-w-6xl h-[95vh]"
       >
         <div className="bg-[var(--theme-bg-primary)] w-full h-full shadow-2xl flex flex-col overflow-hidden rounded-xl border border-[var(--theme-border-primary)]">
           <header className="py-2 px-4 border-b border-[var(--theme-border-secondary)] flex justify-between items-center bg-[var(--theme-bg-secondary)] flex-shrink-0">

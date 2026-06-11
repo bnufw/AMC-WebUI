@@ -97,7 +97,7 @@ export const PreloadedMessagesModal: React.FC<PreloadedMessagesModalProps> = ({
       isOpen={isOpen}
       onClose={handleClose}
       noPadding
-      contentClassName="w-full h-full sm:w-[90vw] sm:h-[90vh] sm:max-w-6xl sm:rounded-xl shadow-2xl flex flex-col overflow-hidden bg-[var(--theme-bg-primary)] border border-[var(--theme-border-primary)] transition-all"
+      contentClassName="w-full h-full sm:w-[95vw] sm:h-[90vh] sm:max-w-7xl sm:rounded-xl shadow-2xl flex flex-col overflow-hidden bg-[var(--theme-bg-primary)] border border-[var(--theme-border-primary)] transition-all"
     >
       <div className="flex flex-col h-full relative">
         <div className="flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 bg-[var(--theme-bg-primary)] flex-shrink-0 z-10 border-b border-[var(--theme-border-secondary)]/50">
